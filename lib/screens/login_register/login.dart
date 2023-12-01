@@ -61,6 +61,7 @@ class _LoginPageState extends State<LoginPage> {
               height: 25,
             ),
             MyTextField(
+              number: false,
               placeholder: "Email",
               width: 400,
               controller: emailController,
@@ -69,6 +70,7 @@ class _LoginPageState extends State<LoginPage> {
               height: 15,
             ),
             MyTextField(
+              number: false,
               placeholder: "Senha",
               width: 400,
               controller: senhaController,

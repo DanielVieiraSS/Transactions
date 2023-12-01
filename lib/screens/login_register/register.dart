@@ -62,6 +62,7 @@ class _RegisterPageState extends State<RegisterPage> {
               height: 25,
             ),
             MyTextField(
+              number: false,
               placeholder: "Nome",
               width: 400,
               controller: nomeController,
@@ -70,6 +71,7 @@ class _RegisterPageState extends State<RegisterPage> {
               height: 15,
             ),
             MyTextField(
+              number: false,
               placeholder: "Email",
               width: 400,
               controller: emailController,
@@ -78,6 +80,7 @@ class _RegisterPageState extends State<RegisterPage> {
               height: 15,
             ),
             MyTextField(
+              number: false,
               placeholder: "Senha",
               width: 400,
               controller: senhaController,

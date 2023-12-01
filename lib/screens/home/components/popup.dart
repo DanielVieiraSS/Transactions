@@ -1,6 +1,7 @@
 import 'package:expenses/constants.dart';
 import 'package:expenses/screens/components/text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class NovaTransacao extends StatefulWidget {
@@ -16,9 +17,13 @@ class _NovaTransacaoState extends State<NovaTransacao> {
   final TextEditingController priceController = TextEditingController();
   final TextEditingController categoryController = TextEditingController();
 
+  bool operation = false;
   @override
   Widget build(BuildContext context) {
     return SimpleDialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(6),
+      ),
       contentPadding: const EdgeInsets.all(30),
       backgroundColor: const Color.fromARGB(255, 1, 25, 50),
       title: const Text(
@@ -31,6 +36,7 @@ class _NovaTransacaoState extends State<NovaTransacao> {
       ),
       children: <Widget>[
         MyTextField(
+          number: false,
           controller: descriptionController,
           width: 500,
           placeholder: "Descrição",
@@ -38,15 +44,48 @@ class _NovaTransacaoState extends State<NovaTransacao> {
         const SizedBox(
           height: 15,
         ),
-        MyTextField(
-          controller: priceController,
+        SizedBox(
           width: 500,
-          placeholder: "Preço",
+          child: TextField(
+            inputFormatters: <TextInputFormatter>[
+              FilteringTextInputFormatter.allow(
+                RegExp(r'^\d+\.?\d{0,2}$'),
+              ),
+            ],
+            controller: priceController,
+            decoration: InputDecoration(
+              filled: true,
+              fillColor: darkBg,
+              enabledBorder: OutlineInputBorder(
+                borderSide: const BorderSide(
+                  color: Colors.transparent,
+                ),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              border: OutlineInputBorder(
+                borderSide: const BorderSide(
+                  color: Colors.transparent,
+                ),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              labelText: "Valor",
+              labelStyle: const TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+              ),
+            ),
+            textAlign: TextAlign.left,
+            style: TextStyle(
+              color: operation ? green : red,
+              fontSize: 16,
+            ),
+          ),
         ),
         const SizedBox(
           height: 15,
         ),
         MyTextField(
+          number: false,
           controller: categoryController,
           width: 500,
           placeholder: "Categoria",
@@ -76,7 +115,11 @@ class _NovaTransacaoState extends State<NovaTransacao> {
                     Color(0xFF09182C),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  setState(() {
+                    operation = true;
+                  });
+                },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -123,7 +166,9 @@ class _NovaTransacaoState extends State<NovaTransacao> {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  setState(() {
+                    operation = false;
+                  });
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -153,7 +198,7 @@ class _NovaTransacaoState extends State<NovaTransacao> {
         const SizedBox(
           height: 20,
         ),
-        Expanded(
+        SizedBox(
           child: ElevatedButton(
             style: ButtonStyle(
               padding: const MaterialStatePropertyAll(
