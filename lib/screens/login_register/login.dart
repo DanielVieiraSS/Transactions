@@ -39,7 +39,25 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SvgPicture.asset("logo.svg"),
+            SvgPicture.asset(
+              "assets/logo.svg",
+              height: 180,
+              width: 180,
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            const Text(
+              "TRANSACTIONS",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(
+              height: 25,
+            ),
             MyTextField(
               placeholder: "Email",
               width: 400,
