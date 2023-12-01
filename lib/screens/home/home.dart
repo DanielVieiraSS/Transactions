@@ -14,6 +14,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: darkBg,
       appBar: const PreferredSize(
@@ -27,17 +28,19 @@ class _HomeState extends State<Home> {
         width: double.infinity,
         height: double.infinity,
         padding: const EdgeInsets.all(20),
-        child: const Column(
+        child: ListView(
           children: [
-            GeneralInfo(
+            const GeneralInfo(
               total: 16141.00,
               saidas: 1259.00,
               entradas: 17400.00,
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
-            TransactionList(),
+            TransactionList(
+              screen: screenWidth > 800 ? true : false,
+            ),
           ],
         ),
       ),
