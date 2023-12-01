@@ -1,6 +1,8 @@
 import 'package:expenses/constants.dart';
+import 'package:expenses/screens/components/navigation.dart';
 import 'package:expenses/screens/components/text_field.dart';
 import 'package:expenses/screens/login_register/components/buttons.dart';
+import 'package:expenses/screens/login_register/register.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -93,7 +95,14 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      navigationPageRightAnimation(
+                        const RegisterPage(),
+                      ),
+                    );
+                  },
                   child: const Text(
                     "Entrar",
                     style: TextStyle(
