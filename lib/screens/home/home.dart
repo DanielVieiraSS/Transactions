@@ -29,7 +29,11 @@ class _HomeState extends State<Home> {
         padding: const EdgeInsets.all(20),
         child: const Column(
           children: [
-            GeneralInfo(),
+            GeneralInfo(
+              total: 16141.00,
+              saidas: 1259.00,
+              entradas: 17400.00,
+            ),
             SizedBox(
               height: 30,
             ),

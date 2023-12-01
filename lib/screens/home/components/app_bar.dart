@@ -1,4 +1,5 @@
 import 'package:expenses/constants.dart';
+import 'package:expenses/screens/home/components/popup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -44,7 +45,14 @@ class MyAppBar extends StatelessWidget {
                 paleBlue,
               ),
             ),
-            onPressed: () {},
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return const NovaTransacao();
+                },
+              );
+            },
             child: const Text(
               "Nova transação",
               style: TextStyle(

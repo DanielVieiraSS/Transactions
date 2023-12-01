@@ -1,6 +1,5 @@
 import 'package:expenses/constants.dart';
 import 'package:expenses/screens/components/text_field.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
@@ -16,7 +15,7 @@ class _TransactionListState extends State<TransactionList> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       child: Column(
         children: [
           Row(
