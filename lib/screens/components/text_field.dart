@@ -6,10 +6,12 @@ class MyTextField extends StatelessWidget {
     super.key,
     required this.controller,
     required this.width,
+    required this.placeholder,
   });
 
   final double width;
   final TextEditingController controller;
+  final String placeholder;
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +22,22 @@ class MyTextField extends StatelessWidget {
         decoration: InputDecoration(
           filled: true,
           fillColor: darkBg,
-          border: OutlineInputBorder(
+          enabledBorder: OutlineInputBorder(
+            borderSide: const BorderSide(
+              color: Colors.transparent,
+            ),
             borderRadius: BorderRadius.circular(12),
+          ),
+          border: OutlineInputBorder(
+            borderSide: const BorderSide(
+              color: Colors.transparent,
+            ),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          labelText: placeholder,
+          labelStyle: const TextStyle(
+            color: Colors.white,
+            fontSize: 16,
           ),
         ),
         textAlign: TextAlign.left,
