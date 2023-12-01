@@ -1,4 +1,6 @@
 import 'package:expenses/constants.dart';
+import 'package:expenses/screens/components/navigation.dart';
+import 'package:expenses/screens/home/home.dart';
 import 'package:flutter/material.dart';
 
 class MyButton extends StatelessWidget {
@@ -13,28 +15,36 @@ class MyButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 400,
-      child: Expanded(
-        child: TextButton(
-          onPressed: () {},
-          style: ButtonStyle(
-            backgroundColor: MaterialStatePropertyAll(darkBlue),
-            padding: const MaterialStatePropertyAll(
-              EdgeInsets.all(20),
-            ),
-            shape: MaterialStatePropertyAll(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
+      child: TextButton(
+        onPressed: () {
+          func == "login"
+              ? navigatePage(
+                  context,
+                  const Home(),
+                )
+              : navigatePage(
+                  context,
+                  const Home(),
+                );
+        },
+        style: ButtonStyle(
+          backgroundColor: MaterialStatePropertyAll(darkBlue),
+          padding: const MaterialStatePropertyAll(
+            EdgeInsets.all(20),
+          ),
+          shape: MaterialStatePropertyAll(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
             ),
           ),
-          child: Text(
-            text,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 18,
-            ),
+        ),
+        child: Text(
+          text,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 18,
           ),
         ),
       ),

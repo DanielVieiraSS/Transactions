@@ -1,3 +1,4 @@
+import 'package:expenses/constants.dart';
 import 'package:expenses/screens/home/components/app_bar.dart';
 import 'package:expenses/screens/home/components/general_info.dart';
 import 'package:expenses/screens/home/components/transaction_list.dart';
@@ -14,15 +15,24 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: darkBg,
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(100),
         child: MyAppBar(),
       ),
       body: Container(
-        margin: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: lightBg,
+        ),
+        width: double.infinity,
+        height: double.infinity,
+        padding: const EdgeInsets.all(20),
         child: const Column(
           children: [
             GeneralInfo(),
+            SizedBox(
+              height: 30,
+            ),
             TransactionList(),
           ],
         ),
