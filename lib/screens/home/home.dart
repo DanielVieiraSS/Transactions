@@ -1,7 +1,10 @@
 import 'package:expenses/constants.dart';
+import 'package:expenses/handlers/transaction.handlers.dart';
+import 'package:expenses/models/transaction_model.dart';
 import 'package:expenses/screens/home/components/app_bar.dart';
 import 'package:expenses/screens/home/components/general_info.dart';
-import 'package:expenses/screens/home/components/transaction_list.dart';
+import 'package:expenses/screens/home/components/transaction_list_card.dart';
+import 'package:expenses/supabase/instance.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -12,14 +15,71 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  List<TransactionModel> transactionList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchTransactions();
+  }
+
+  fetchTransactions() async {
+    List data = await supabase
+        .from('transactions')
+        .select("*")
+        .eq('userId', loggedUser!.id);
+
+    setState(() {
+      transactionList = data.map((e) {
+        return TransactionModel(
+          category: e['category'],
+          date: e['created_at'],
+          description: e['description'],
+          value: double.parse(e['price'].toString()),
+          type: e['type'],
+        );
+      }).toList();
+    });
+  }
+
+  newTransaction(
+    String description,
+    double price,
+    String category,
+    String type,
+    String userId,
+  ) {
+    insertSupabase(description, price, category, userId, type);
+
+    fetchTransactions();
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: darkBg,
-      appBar: const PreferredSize(
-        preferredSize: Size.fromHeight(100),
-        child: MyAppBar(),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(100),
+        child: SafeArea(
+          child: MyAppBar(
+            func: (
+              String description,
+              double price,
+              String category,
+              String type,
+              String userId,
+            ) {
+              newTransaction(
+                description,
+                price,
+                category,
+                type,
+                userId,
+              );
+            },
+          ),
+        ),
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -30,16 +90,40 @@ class _HomeState extends State<Home> {
         padding: const EdgeInsets.all(20),
         child: ListView(
           children: [
-            const GeneralInfo(
-              total: 16141.00,
-              saidas: 1259.00,
-              entradas: 17400.00,
+            GeneralInfo(
+              list: transactionList,
             ),
             const SizedBox(
               height: 30,
             ),
-            TransactionList(
-              screen: screenWidth > 800 ? true : false,
+            SizedBox(
+              child: Column(
+                children: [
+                  SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        ListView.separated(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
+                          itemCount: transactionList.length,
+                          separatorBuilder: (context, index) => const SizedBox(
+                              height: 10), // Separator between items
+                          itemBuilder: (context, index) {
+                            return TransactionListCard(
+                              screen: screenWidth > 800 ? true : false,
+                              category: transactionList[index].category,
+                              date: transactionList[index].date,
+                              description: transactionList[index].description,
+                              value: transactionList[index].value,
+                              type: transactionList[index].type,
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
             const SizedBox(
               height: 30,

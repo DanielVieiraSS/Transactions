@@ -10,6 +10,6 @@ class TransactionModel {
   final String category;
   final double value;
   final String description;
-  final DateTime date;
+  final String date;
   final String type;
 }

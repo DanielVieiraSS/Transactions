@@ -5,19 +5,29 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class NovaTransacao extends StatefulWidget {
-  const NovaTransacao({super.key});
+  const NovaTransacao({
+    super.key,
+    required this.func,
+  });
+
+  final Function(
+    String description,
+    double price,
+    String category,
+    String type,
+    String userId,
+  ) func;
 
   @override
   State<NovaTransacao> createState() => _NovaTransacaoState();
 }
 
 class _NovaTransacaoState extends State<NovaTransacao> {
-  // TextEditingController for the TextField
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
   final TextEditingController categoryController = TextEditingController();
-
   bool operation = false;
+
   @override
   Widget build(BuildContext context) {
     return SimpleDialog(
@@ -218,6 +228,13 @@ class _NovaTransacaoState extends State<NovaTransacao> {
               ),
             ),
             onPressed: () {
+              widget.func(
+                descriptionController.text,
+                double.parse(priceController.text),
+                categoryController.text,
+                operation ? "entrada" : "saida",
+                loggedUser!.id,
+              );
               Navigator.of(context).pop();
             },
             child: const Text(

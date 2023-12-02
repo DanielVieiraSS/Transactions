@@ -1,4 +1,5 @@
 import 'package:expenses/constants.dart';
+import 'package:expenses/models/transaction_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
@@ -6,21 +7,32 @@ import 'package:intl/intl.dart';
 class GeneralInfo extends StatelessWidget {
   const GeneralInfo({
     super.key,
-    required this.entradas,
-    required this.saidas,
-    required this.total,
+    required this.list,
   });
 
-  final double entradas;
-  final double saidas;
-  final double total;
+  final List<TransactionModel> list;
 
   @override
   Widget build(BuildContext context) {
+    double entradas = 0.00;
+    double saidas = 0.00;
+    double total = 0.00;
     NumberFormat formatter = NumberFormat("#,##0.00", "en_US");
-    String entradasFormatted = formatter.format(entradas);
-    String saidasFormatted = formatter.format(saidas);
-    String totalFormatted = formatter.format(total);
+
+    for (var e in list) {
+      if (e.type == "entrada") {
+        entradas += e.value;
+        total += e.value;
+      }
+      if (e.type == "saida") {
+        saidas += e.value;
+        total -= e.value;
+      }
+    }
+
+    String formattedEntradas = formatter.format(entradas);
+    String formattedSaidas = formatter.format(saidas);
+    String formattedTotal = formatter.format(total);
 
     return SizedBox(
       width: double.infinity,
@@ -61,7 +73,7 @@ class GeneralInfo extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       textAlign: TextAlign.left,
-                      "R\$ $entradasFormatted",
+                      "R\$ $formattedEntradas",
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 32,
@@ -106,7 +118,7 @@ class GeneralInfo extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       textAlign: TextAlign.left,
-                      "R\$ $saidasFormatted",
+                      "R\$ $formattedSaidas",
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 32,
@@ -151,7 +163,7 @@ class GeneralInfo extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       textAlign: TextAlign.left,
-                      "R\$ $totalFormatted",
+                      "R\$ $formattedTotal",
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 32,

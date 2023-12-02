@@ -4,7 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class MyAppBar extends StatelessWidget {
-  const MyAppBar({super.key});
+  const MyAppBar({
+    super.key,
+    required this.func,
+  });
+
+  final Function(
+    String description,
+    double price,
+    String category,
+    String type,
+    String userId,
+  ) func;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +60,23 @@ class MyAppBar extends StatelessWidget {
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
-                  return const NovaTransacao();
+                  return NovaTransacao(
+                    func: (
+                      String description,
+                      double price,
+                      String category,
+                      String type,
+                      String userId,
+                    ) {
+                      func(
+                        description,
+                        price,
+                        category,
+                        type,
+                        userId,
+                      );
+                    },
+                  );
                 },
               );
             },

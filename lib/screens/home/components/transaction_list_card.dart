@@ -16,7 +16,7 @@ class TransactionListCard extends StatelessWidget {
   final String category;
   final double value;
   final String description;
-  final DateTime date;
+  final String date;
   final String type;
   final bool screen;
 
@@ -24,7 +24,7 @@ class TransactionListCard extends StatelessWidget {
   Widget build(BuildContext context) {
     NumberFormat formatter = NumberFormat("#,##0.00", "en_US");
     String numberFormatted = formatter.format(value);
-    String dateFormatted = DateFormat('dd/MM/yyyy').format(date);
+
     return screen
         ? Container(
             padding: const EdgeInsets.all(20),
@@ -35,38 +35,66 @@ class TransactionListCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  description,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                SizedBox(
+                  width: 150,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      description,
+                      textAlign: TextAlign.left,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ),
-                Text(
-                  type == "saida"
-                      ? "- R\$ $numberFormatted"
-                      : "R\$ $numberFormatted",
-                  style: TextStyle(
-                    color: type == "saida" ? red : green,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                SizedBox(
+                  width: 150,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      type == "saida"
+                          ? "-R\$ $numberFormatted"
+                          : "R\$ $numberFormatted",
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        color: type == "saida" ? red : green,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ),
-                Text(
-                  category,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                SizedBox(
+                  width: 150,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      category,
+                      textAlign: TextAlign.left,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ),
-                Text(
-                  dateFormatted,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                SizedBox(
+                  width: 150,
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      date,
+                      textAlign: TextAlign.left,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ),
               ],
@@ -110,7 +138,7 @@ class TransactionListCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      dateFormatted,
+                      date,
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 16,

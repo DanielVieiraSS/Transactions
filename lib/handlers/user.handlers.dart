@@ -57,14 +57,14 @@ Future<void> authenticateUserHandler(
 
     Map<String, dynamic> userMap = data[0];
 
-    UserModel loggedUser = UserModel(
+    loggedUser = UserModel(
       userMap["name"],
       userMap["email"],
       userMap["password"],
     );
 
-    loggedUser.id = userMap['id'];
-    loggedUser.createdAt = DateTime.parse(userMap['created_at']);
+    loggedUser!.id = userMap['id'];
+    loggedUser!.createdAt = DateTime.parse(userMap['created_at']);
 
     bool isPasswordRight =
         verifyPassword(password, userMap['password'], userMap['salt']);
