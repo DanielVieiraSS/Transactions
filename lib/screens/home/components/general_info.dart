@@ -134,7 +134,7 @@ class GeneralInfo extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text(
-                        "Saídas",
+                        "Total",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,
