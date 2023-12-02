@@ -41,6 +41,58 @@ class _HomeState extends State<Home> {
             TransactionList(
               screen: screenWidth > 800 ? true : false,
             ),
+            const SizedBox(
+              height: 30,
+            ),
+            const Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  "Membros do Grupo",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  "Daniel Vieira RA: 1431432312007",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                  ),
+                ),
+                Text(
+                  "Felipe Thaylan RA: 1431432312030",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                  ),
+                ),
+                Text(
+                  "Lucas Passos RA: 1431432312007",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                  ),
+                ),
+                Text(
+                  "Victor Hugo RA: 1431432312001",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                  ),
+                ),
+                Text(
+                  "Matheus Silva RA: 1431432312017",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
