@@ -1,34 +1,24 @@
 import 'package:expenses/constants.dart';
-import 'package:expenses/screens/components/navigation.dart';
-import 'package:expenses/screens/home/home.dart';
 import 'package:flutter/material.dart';
 
 class MyButton extends StatelessWidget {
   const MyButton({
     super.key,
     required this.text,
-    required this.func,
+    required this.onPressed,
+    required this.isFetching,
   });
 
   final String text;
-  final String func;
+  final VoidCallback onPressed;
+  final bool isFetching;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: 400,
       child: TextButton(
-        onPressed: () {
-          func == "login"
-              ? navigatePage(
-                  context,
-                  const Home(),
-                )
-              : navigatePage(
-                  context,
-                  const Home(),
-                );
-        },
+        onPressed: onPressed,
         style: ButtonStyle(
           backgroundColor: MaterialStatePropertyAll(darkBlue),
           padding: const MaterialStatePropertyAll(
@@ -40,13 +30,19 @@ class MyButton extends StatelessWidget {
             ),
           ),
         ),
-        child: Text(
-          text,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 18,
-          ),
-        ),
+        child: isFetching
+            ? const SizedBox(
+                width: 24,
+                height: 24,
+                child: CircularProgressIndicator(color: Colors.white),
+              )
+            : Text(
+                text,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                ),
+              ),
       ),
     );
   }

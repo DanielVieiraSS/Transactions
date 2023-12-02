@@ -6,12 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class TransactionList extends StatefulWidget {
-  const TransactionList({
-    super.key,
-    required this.screen,
-  });
-
-  final bool screen;
+  const TransactionList({super.key});
 
   @override
   State<TransactionList> createState() => _TransactionListState();
@@ -19,29 +14,7 @@ class TransactionList extends StatefulWidget {
 
 class _TransactionListState extends State<TransactionList> {
   TextEditingController searchController = TextEditingController();
-  List<TransactionModel> transactions = [
-    TransactionModel(
-      category: "Teste",
-      date: DateTime.now(),
-      description: "Teste",
-      value: 10000,
-      type: "saida",
-    ),
-    TransactionModel(
-      category: "Teste",
-      date: DateTime.now(),
-      description: "Teste",
-      value: 10000,
-      type: "saida",
-    ),
-    TransactionModel(
-      category: "Teste",
-      date: DateTime.now(),
-      description: "Teste",
-      value: 10000,
-      type: "saida",
-    ),
-  ];
+  List<TransactionModel> transactions = [];
 
   @override
   Widget build(BuildContext context) {
@@ -79,28 +52,20 @@ class _TransactionListState extends State<TransactionList> {
           const SizedBox(
             height: 20,
           ),
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                ListView.separated(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.vertical,
-                  itemCount: transactions.length,
-                  separatorBuilder: (context, index) =>
-                      const SizedBox(height: 10), // Separator between items
-                  itemBuilder: (context, index) {
-                    return TransactionListCard(
-                      screen: widget.screen,
-                      category: transactions[index].category,
-                      date: transactions[index].date,
-                      description: transactions[index].description,
-                      value: transactions[index].value,
-                      type: transactions[index].type,
-                    );
-                  },
-                ),
-              ],
-            ),
+          ListView.separated(
+            shrinkWrap: true,
+            scrollDirection: Axis.vertical,
+            itemCount: transactions.length,
+            separatorBuilder: (context, index) =>
+                const SizedBox(height: 10), // Separator between items
+            itemBuilder: (context, index) {
+              return TransactionListCard(
+                category: transactions[index].category,
+                date: transactions[index].date,
+                description: transactions[index].description,
+                value: transactions[index].value,
+              );
+            },
           ),
         ],
       ),
