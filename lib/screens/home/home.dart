@@ -14,7 +14,6 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: darkBg,
       appBar: const PreferredSize(
@@ -28,71 +27,17 @@ class _HomeState extends State<Home> {
         width: double.infinity,
         height: double.infinity,
         padding: const EdgeInsets.all(20),
-        child: ListView(
+        child: const Column(
           children: [
-            const GeneralInfo(
+            GeneralInfo(
               total: 16141.00,
               saidas: 1259.00,
               entradas: 17400.00,
             ),
-            const SizedBox(
+            SizedBox(
               height: 30,
             ),
-            TransactionList(
-              screen: screenWidth > 800 ? true : false,
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            const Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  "Membros do Grupo",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  "Daniel Vieira RA: 1431432312007",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
-                  ),
-                ),
-                Text(
-                  "Felipe Thaylan RA: 1431432312030",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
-                  ),
-                ),
-                Text(
-                  "Lucas Passos RA: 1431432312007",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
-                  ),
-                ),
-                Text(
-                  "Victor Hugo RA: 1431432312001",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
-                  ),
-                ),
-                Text(
-                  "Matheus Silva RA: 1431432312017",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
-                  ),
-                ),
-              ],
-            ),
+            TransactionList(),
           ],
         ),
       ),

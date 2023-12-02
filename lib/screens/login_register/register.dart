@@ -1,4 +1,6 @@
 import 'package:expenses/constants.dart';
+import 'package:expenses/handlers/user.handlers.dart';
+import 'package:expenses/models/user_model.dart';
 import 'package:expenses/screens/components/navigation.dart';
 import 'package:expenses/screens/components/text_field.dart';
 import 'package:expenses/screens/login_register/components/buttons.dart';
@@ -14,9 +16,35 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  TextEditingController nomeController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-  TextEditingController senhaController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  bool isFetching = false;
+
+  Future<void> createUser() async {
+    setState(() => isFetching = true);
+
+    UserModel newUser = UserModel(
+      nameController.text,
+      emailController.text,
+      passwordController.text,
+    );
+
+    await createUserHandler(context, newUser);
+
+    setState(() => isFetching = false);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,94 +66,99 @@ class _RegisterPageState extends State<RegisterPage> {
       ),
       backgroundColor: lightBg,
       body: Container(
-        margin: const EdgeInsets.all(20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SvgPicture.asset(
-              "assets/logo.svg",
-              height: 180,
-              width: 180,
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            const Text(
-              "TRANSACTIONS",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
+        margin: const EdgeInsets.only(top: 40, right: 16, left: 16, bottom: 10),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SvgPicture.asset(
+                "assets/logo.svg",
+                height: 180,
+                width: 180,
               ),
-            ),
-            const SizedBox(
-              height: 25,
-            ),
-            MyTextField(
-              number: false,
-              placeholder: "Nome",
-              width: 400,
-              controller: nomeController,
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            MyTextField(
-              number: false,
-              placeholder: "Email",
-              width: 400,
-              controller: emailController,
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            MyTextField(
-              number: false,
-              placeholder: "Senha",
-              width: 400,
-              controller: senhaController,
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            const MyButton(
-              text: "Criar Conta",
-              func: "register",
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  "Já tem um conta? ",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                  ),
+              const SizedBox(
+                height: 15,
+              ),
+              const Text(
+                "TRANSACTIONS",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
                 ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      navigationPageLeftAnimation(
-                        const LoginPage(),
-                      ),
-                    );
-                  },
-                  child: const Text(
-                    "Entrar",
+              ),
+              const SizedBox(
+                height: 25,
+              ),
+              MyTextField(
+                number: false,
+                placeholder: "Nome",
+                width: 400,
+                controller: nameController,
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              MyTextField(
+                number: false,
+                placeholder: "Email",
+                width: 400,
+                controller: emailController,
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              MyTextField(
+                number: false,
+                placeholder: "Senha",
+                width: 400,
+                controller: passwordController,
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              MyButton(
+                text: "Criar Conta",
+                onPressed: () {
+                  createUser();
+                },
+                isFetching: isFetching,
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    "Já tem um conta? ",
                     style: TextStyle(
-                      color: Color(0xFF119BFF),
+                      color: Colors.white,
                       fontSize: 16,
                     ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                  TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        navigationPageLeftAnimation(
+                          const LoginPage(),
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      "Entrar",
+                      style: TextStyle(
+                        color: Color(0xFF119BFF),
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
