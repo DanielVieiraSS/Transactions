@@ -60,20 +60,24 @@ class MyAppBar extends StatelessWidget {
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
-                  return NovaTransacao(
-                    func: (
-                      String description,
-                      double price,
-                      String category,
-                      String type,
-                      String userId,
-                    ) {
-                      func(
-                        description,
-                        price,
-                        category,
-                        type,
-                        userId,
+                  return StatefulBuilder(
+                    builder: (context, setState) {
+                      return NovaTransacao(
+                        func: (
+                          String description,
+                          double price,
+                          String category,
+                          String type,
+                          String userId,
+                        ) {
+                          func(
+                            description,
+                            price,
+                            category,
+                            type,
+                            userId,
+                          );
+                        },
                       );
                     },
                   );
