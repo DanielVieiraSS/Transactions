@@ -4,7 +4,6 @@ import 'package:expenses/models/transaction_model.dart';
 import 'package:expenses/screens/home/components/app_bar.dart';
 import 'package:expenses/screens/home/components/general_info.dart';
 import 'package:expenses/screens/home/components/transaction_list_card.dart';
-import 'package:expenses/supabase/instance.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -23,35 +22,34 @@ class _HomeState extends State<Home> {
     fetchTransactions();
   }
 
-  fetchTransactions() async {
-    List data = await supabase
-        .from('transactions')
-        .select("*")
-        .eq('userId', loggedUser!.id);
-
-    setState(() {
-      transactionList = data.map((e) {
-        return TransactionModel(
-          category: e['category'],
-          date: e['created_at'],
-          description: e['description'],
-          value: double.parse(e['price'].toString()),
-          type: e['type'],
-        );
-      }).toList();
-    });
+  @override
+  void dispose() {
+    super.dispose();
   }
 
-  newTransaction(
+  Future<void> fetchTransactions() async {
+    List<TransactionModel> transactions = await fetchTransactionsHandler();
+    setState(() => transactionList = transactions.reversed.toList());
+  }
+
+  Future<void> createNewTransaction(
     String description,
     double price,
     String category,
     String type,
     String userId,
-  ) {
-    insertSupabase(description, price, category, userId, type);
+  ) async {
+    TransactionModel createdTransaction = await saveTransactionHandler(
+      description,
+      price,
+      category,
+      userId,
+      type,
+    );
 
-    fetchTransactions();
+    setState(() {
+      transactionList.insert(0, createdTransaction);
+    });
   }
 
   @override
@@ -70,7 +68,7 @@ class _HomeState extends State<Home> {
               String type,
               String userId,
             ) {
-              newTransaction(
+              createNewTransaction(
                 description,
                 price,
                 category,
@@ -139,6 +137,9 @@ class _HomeState extends State<Home> {
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
                   ),
+                ),
+                SizedBox(
+                  height: 24,
                 ),
                 Text(
                   "Daniel Vieira RA: 1431432312007",
